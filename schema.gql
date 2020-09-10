@@ -33,6 +33,6 @@ type Mutation {
 }
 
 type Query {
-  authors: [Author!]!
-  books: [Book!]!
+  authors(authorId: Int, name: Int): [Author!]!
+  books(bookId: Int, authorId: Int, name: String): [Book!]!
 }

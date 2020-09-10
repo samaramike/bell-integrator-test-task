@@ -3,7 +3,8 @@ import { Author } from '../author/author.entity';
 import { IGraphQLContext } from '../common/types/graphql.types';
 import { Book } from './book.entity';
 import { BookService } from './book.service';
-import { CreateBookInput } from './create-book.input';
+import { CreateBookInput } from './dto/create-book.input';
+import { GetBookAgrs } from './dto/get-book.args';
 
 @Resolver(of => Book)
 export class BookResolver {
@@ -12,8 +13,8 @@ export class BookResolver {
   ) {}
 
   @Query(returns => [Book])
-  public async books(): Promise<Book[]> {
-    return this.bookService.find();
+  public async books(@Args() bookAgrs: GetBookAgrs): Promise<Book[]> {
+    return this.bookService.find(bookAgrs);
   }
 
   @Mutation(() => Book)

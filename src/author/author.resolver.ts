@@ -1,15 +1,18 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Author } from './author.entity';
 import { AuthorService } from './author.service';
-import { CreateAuthorInput } from './create-author.input';
+import { CreateAuthorInput } from './dto/create-author.input';
+import { GetAuthorAgrs } from './dto/get-author.args';
 
 @Resolver(of => Author)
 export class AuthorResolver {
   constructor(private readonly authorService: AuthorService) {}
 
   @Query(returns => [Author])
-  public async authors(): Promise<Author[]> {
-    return this.authorService.find();
+  public async authors(
+    @Args() authorAgrs: GetAuthorAgrs,
+  ): Promise<Author[]> {
+    return this.authorService.find(authorAgrs);
   }
 
   @Mutation(returns => Author)
